@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.DecimalFormat;
+
 @Controller
 public class WeatherController {
 
@@ -25,13 +27,15 @@ public class WeatherController {
     public ModelAndView displayWeather() {
         ModelAndView mv = new ModelAndView("home");
 
-        Forecast forecast = weatherService.fetchWeatherData();
+        Forecast forecast = weatherService.fetchWeatherData("Chicago");
         Temperature temperature = forecast.getTemperature();
         double tempInFarhenheit = (temperature.getTemp() * 9/5 - 459.67);
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.format(tempInFarhenheit);
         SunTimes sunTimes = forecast.getSunTimes();
 
         mv.addObject("cityName","The current temperature in " + forecast.getName()
-                + " is " + tempInFarhenheit + "." + " The current humidity is " + temperature.getHumidity()
+                + " is " + df.format(tempInFarhenheit) + "." + " The current humidity is " + temperature.getHumidity()
                 + " %. Sunrise was at " +  sunTimes.getSunrise() + ". Sunset will be at " + sunTimes.getSunset()
 
         );

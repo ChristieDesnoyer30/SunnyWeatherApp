@@ -8,11 +8,11 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class WeatherService {
 
-    public Forecast fetchWeatherData(){
+    public Forecast fetchWeatherData(String cityname){
         RestTemplate restTemplate = new RestTemplate();
 
         return restTemplate.getForObject("http://api.openweathermap.org/data/2.5/weather?q=" +
-                "Detroit&APPID=d016ac69111dabafef719181aa4ab8ca", Forecast.class);
+                cityname +"&APPID=d016ac69111dabafef719181aa4ab8ca", Forecast.class);
     }
 
 

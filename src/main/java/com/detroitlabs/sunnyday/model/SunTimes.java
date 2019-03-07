@@ -6,6 +6,7 @@ public class SunTimes {
     private long sunset;
 
     public long getSunrise() {
+
         return sunrise;
     }
 
