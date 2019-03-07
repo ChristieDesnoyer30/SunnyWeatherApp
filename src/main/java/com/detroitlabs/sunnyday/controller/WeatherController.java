@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Controller
 public class WeatherController {
@@ -34,10 +37,15 @@ public class WeatherController {
         df.format(tempInFarhenheit);
         SunTimes sunTimes = forecast.getSunTimes();
 
+
+Date sunRise = new Date(sunTimes.getSunrise()*1000);
+Date sunSet = new Date(sunTimes.getSunset()*1000);
+DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy hh:mm:ss zzz");
+
+
         mv.addObject("cityName","The current temperature in " + forecast.getName()
                 + " is " + df.format(tempInFarhenheit) + "." + " The current humidity is " + temperature.getHumidity()
-                + " %. Sunrise was at " +  sunTimes.getSunrise() + ". Sunset will be at " + sunTimes.getSunset()
-
+                + " %. Sunrise was at " +  dateFormat.format(sunRise)+ ". Sunset will be at " + dateFormat.format(sunSet)
         );
 
         return mv;
